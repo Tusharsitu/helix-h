@@ -1,0 +1,32 @@
+inputSet:
+  name: new-input
+  identifier: newinput
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: newpipeline123
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
+    stages:
+      - stage:
+          identifier: deplyment
+          type: Deployment
+          spec:
+            service:
+              serviceInputs:
+                serviceDefinition:
+                  type: Kubernetes
+                  spec:
+                    artifacts:
+                      primary:
+                        primaryArtifactRef: newartifact1
+                        sources:
+                          - identifier: newartifact1
+                            type: DockerRegistry
+                            spec:
+                              tagRegex: latest
